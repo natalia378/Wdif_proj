@@ -35,7 +35,7 @@ calculate_call_cost <- function(S0, K, T, delta_t, u, d, r){
   
   for(i in rev(2:n)){
     costs_matrix <- matrix(c(costs[[i]][1],
-                             rep(costs[[i]][-c(1, i)], ifelse(i == 2, 0, 2)),
+                             rep(costs[[i]][-c(1, i)], each = ifelse(i == 2, 0, 2)),
                              costs[[i]][i]), ncol = i - 1)
     p_matrix <- matrix(rep(c(p, 1-p), i - 1), ncol = i - 1)
     costs[[i-1]] <- exp(-r * delta_t) * apply(costs_matrix * p_matrix, 2, sum)
@@ -57,7 +57,7 @@ calculate_put_cost <- function(S0, K, T, delta_t, u, d, r){
   
   for(i in rev(2:n)){
     costs_matrix <- matrix(c(costs[[i]][1],
-                             rep(costs[[i]][-c(1, i)], ifelse(i == 2, 0, 2)),
+                             rep(costs[[i]][-c(1, i)], each = ifelse(i == 2, 0, 2)),
                              costs[[i]][i]), ncol = i - 1)
     p_matrix <- matrix(rep(c(p, 1-p), i - 1), ncol = i - 1)
     costs[[i-1]] <- exp(-r * delta_t) * apply(costs_matrix * p_matrix, 2, sum)
